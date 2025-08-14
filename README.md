@@ -1,3 +1,9 @@
+# 🚧 Project Under Active Development
+
+This project is currently being built as part of my MS in Computer Science at Northeastern University.
+
+**Expected Completion:** August 25, 2025
+
 # 🔒 E-Commerce Fraud Detection System
 
 [![API Status](https://img.shields.io/badge/API-Live-success)](https://fraud-api.herokuapp.com)
