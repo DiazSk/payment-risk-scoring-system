@@ -1,0 +1,148 @@
+# Docker Compose for Credit Card Fraud Detection System
+# Production-ready multi-service deployment
+
+version: '3.8'
+
+services:
+  # Main Fraud Detection API
+  fraud-api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: production
+    container_name: fraud-detection-api
+    ports:
+      - "8000:8000"
+    environment:
+      - PYTHONPATH=/app
+      - API_HOST=0.0.0.0
+      - API_PORT=8000
+      - LOG_LEVEL=info
+    volumes:
+      # Mount models directory (read-only for production)
+      - ./models:/app/models:ro
+      - ./logs:/app/logs
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+    networks:
+      - fraud-network
+
+  # Development version with hot reload
+  fraud-api-dev:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: development
+    container_name: fraud-detection-api-dev
+    ports:
+      - "8001:8000"
+    environment:
+      - PYTHONPATH=/app
+      - API_HOST=0.0.0.0
+      - API_PORT=8000
+      - LOG_LEVEL=debug
+    volumes:
+      # Mount source code for development hot reload
+      - .:/app
+      - /app/venv  # Exclude virtual environment
+    restart: unless-stopped
+    profiles:
+      - dev
+    networks:
+      - fraud-network
+
+  # Nginx reverse proxy for production
+  nginx:
+    image: nginx:alpine
+    container_name: fraud-nginx
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./nginx/ssl:/etc/nginx/ssl:ro
+    depends_on:
+      - fraud-api
+    restart: unless-stopped
+    profiles:
+      - production
+    networks:
+      - fraud-network
+
+  # Redis for caching (optional enhancement)
+  redis:
+    image: redis:7-alpine
+    container_name: fraud-redis
+    ports:
+      - "6379:6379"
+    command: redis-server --appendonly yes --requirepass fraud_cache_2024
+    volumes:
+      - redis-data:/data
+    restart: unless-stopped
+    profiles:
+      - production
+      - redis
+    networks:
+      - fraud-network
+
+  # Monitoring with Prometheus (optional)
+  prometheus:
+    image: prom/prometheus:latest
+    container_name: fraud-prometheus
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./monitoring/prometheus.yml:/etc/prometheus/prometheus.yml:ro
+      - prometheus-data:/prometheus
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+      - '--storage.tsdb.path=/prometheus'
+      - '--web.console.libraries=/usr/share/prometheus/console_libraries'
+      - '--web.console.templates=/usr/share/prometheus/consoles'
+      - '--web.enable-lifecycle'
+    restart: unless-stopped
+    profiles:
+      - monitoring
+    networks:
+      - fraud-network
+
+  # Grafana dashboard (optional)
+  grafana:
+    image: grafana/grafana:latest
+    container_name: fraud-grafana
+    ports:
+      - "3000:3000"
+    environment:
+      - GF_SECURITY_ADMIN_PASSWORD=fraud_admin_2024
+    volumes:
+      - grafana-data:/var/lib/grafana
+      - ./monitoring/grafana/dashboards:/var/lib/grafana/dashboards:ro
+      - ./monitoring/grafana/provisioning:/etc/grafana/provisioning:ro
+    depends_on:
+      - prometheus
+    restart: unless-stopped
+    profiles:
+      - monitoring
+    networks:
+      - fraud-network
+
+networks:
+  fraud-network:
+    driver: bridge
+    name: fraud-detection-network
+
+volumes:
+  redis-data:
+    driver: local
+    name: fraud-redis-data
+  prometheus-data:
+    driver: local
+    name: fraud-prometheus-data
+  grafana-data:
+    driver: local
+    name: fraud-grafana-data
