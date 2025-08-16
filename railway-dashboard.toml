@@ -1,0 +1,26 @@
+# Railway.app Configuration for Streamlit Dashboard
+# Deploy this as a separate service for the dashboard
+
+[build]
+builder = "nixpacks"
+buildCommand = "pip install -r requirements.txt"
+
+[deploy]
+startCommand = "streamlit run dashboard/app.py --server.port $PORT --server.address 0.0.0.0 --server.headless true --server.fileWatcherType none"
+healthcheckPath = "/"
+healthcheckTimeout = 300
+restartPolicyType = "on_failure"
+restartPolicyMaxRetries = 3
+
+# Environment variables
+[env]
+ENVIRONMENT = "production"
+PYTHONPATH = "/app"
+PORT = "8501"
+STREAMLIT_SERVER_HEADLESS = "true"
+STREAMLIT_SERVER_ENABLE_CORS = "false"
+
+# Railway service configuration  
+[[services]]
+name = "fraud-detection-dashboard"
+source = "."
