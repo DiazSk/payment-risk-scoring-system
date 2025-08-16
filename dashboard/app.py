@@ -14,6 +14,7 @@ from plotly.subplots import make_subplots
 from datetime import datetime, timedelta
 import time
 import sys
+import os
 from pathlib import Path
 
 # Add parent directory to path for imports
@@ -66,9 +67,13 @@ st.markdown("""
 
 class FraudDashboard:
     def __init__(self):
-        self.api_base_url = "http://localhost:8000"
+        # Use environment variable for API URL, fallback to localhost for development
+        self.api_base_url = os.getenv("API_URL", "http://localhost:8000").rstrip('/')
         self.models_metadata = None
         self.api_status = None
+        
+        # Log the API URL being used
+        print(f"🔗 Dashboard connecting to API: {self.api_base_url}")
     
     def check_api_connection(self):
         """Check if the API is available"""
@@ -120,9 +125,12 @@ class FraudDashboard:
                 st.success("✅ API Connected")
                 if self.api_status:
                     st.metric("API Uptime", f"{self.api_status.get('uptime_seconds', 0):.0f}s")
+                st.caption(f"🔗 {self.api_base_url}")
             else:
                 st.error("❌ API Disconnected")
-                st.warning("Please start the API server:\n`python start_api.py`")
+                st.warning("Please check API server status")
+                st.caption(f"🔗 Trying: {self.api_base_url}")
+                st.caption("Expected: API should be running and accessible")
             
             st.markdown("---")
             
@@ -548,10 +556,11 @@ class FraudDashboard:
                 
                 fig.update_layout(height=300)
                 st.plotly_chart(fig, use_container_width=True)
+                
             else:
-                error_msg = result['error'] if result and 'error' in result else 'Unknown error'
+                error_msg = result.get('error', 'Unknown error') if result else 'API connection failed'
                 st.error(f"❌ Prediction failed: {error_msg}")
-
+    
     def render_performance_page(self):
         """Render model performance page"""
         st.markdown("## 📈 Model Performance Analytics")
