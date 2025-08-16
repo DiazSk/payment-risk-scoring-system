@@ -124,13 +124,16 @@ class FraudDashboard:
             if api_connected:
                 st.success("✅ API Connected")
                 if self.api_status:
-                    st.metric("API Uptime", f"{self.api_status.get('uptime_seconds', 0):.0f}s")
-                st.caption(f"🔗 {self.api_base_url}")
+                    uptime_seconds = self.api_status.get('uptime_seconds', 0)
+                    uptime_minutes = uptime_seconds / 60
+                    if uptime_minutes < 60:
+                        st.metric("API Uptime", f"{uptime_minutes:.1f}m")
+                    else:
+                        uptime_hours = uptime_minutes / 60
+                        st.metric("API Uptime", f"{uptime_hours:.1f}h")
             else:
                 st.error("❌ API Disconnected")
                 st.warning("Please check API server status")
-                st.caption(f"🔗 Trying: {self.api_base_url}")
-                st.caption("Expected: API should be running and accessible")
             
             st.markdown("---")
             
@@ -556,11 +559,10 @@ class FraudDashboard:
                 
                 fig.update_layout(height=300)
                 st.plotly_chart(fig, use_container_width=True)
-                
             else:
-                error_msg = result.get('error', 'Unknown error') if result else 'API connection failed'
+                error_msg = result['error'] if result and 'error' in result else 'Unknown error'
                 st.error(f"❌ Prediction failed: {error_msg}")
-    
+
     def render_performance_page(self):
         """Render model performance page"""
         st.markdown("## 📈 Model Performance Analytics")
