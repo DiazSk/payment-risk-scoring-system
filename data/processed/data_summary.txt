@@ -1,0 +1,46 @@
+Dataset Summary
+==================================================
+Total transactions: 10000
+Fraudulent transactions: 17
+Fraud rate: 0.1700%
+Average transaction amount: $180.53
+Median transaction amount: $32.61
+
+Column Info:
+TransactionID                  object
+TransactionDT                   int32
+TransactionAmt                float64
+ProductCD                      object
+card1                           int32
+card2                           int32
+card3                           int32
+card4                          object
+card5                           int32
+card6                          object
+addr1                           int32
+addr2                           int32
+dist1                         float64
+dist2                         float64
+P_emaildomain                  object
+R_emaildomain                  object
+C1                            float64
+C2                            float64
+C3                            float64
+C4                            float64
+D1                            float64
+D2                            float64
+D3                            float64
+M1                             object
+M2                             object
+M3                             object
+V1                            float64
+V2                            float64
+V3                            float64
+id_01                         float64
+id_02                         float64
+id_03                         float64
+DeviceType                     object
+DeviceInfo                     object
+isFraud                         int64
+TransactionDateTime    datetime64[ns]
+dtype: object

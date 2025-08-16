@@ -1,0 +1,73 @@
+FRAUD DETECTION PIPELINE TEST REPORT
+==================================================
+
+Test Date: 2025-08-16T03:29:42.959564
+
+DATASET SUMMARY:
+  Total Transactions: 10,000
+  Fraudulent: 17
+  Fraud Rate: 0.1700%
+  Shape: (10000, 84)
+
+FEATURE ENGINEERING:
+  Total Features: 48
+  Engineered Features: 48
+  Feature Categories:
+    - Temporal: 9
+    - Velocity: 5
+    - Amount: 16
+    - Risk: 6
+
+DATA QUALITY:
+  Missing Values: 0.00%
+  Memory Usage: 10.92 MB
+
+CREATED FEATURES:
+   1. transaction_hour
+   2. transaction_day
+   3. transaction_month
+   4. transaction_weekday
+   5. transaction_weekend
+   6. is_business_hours
+   7. is_late_night
+   8. is_holiday
+   9. days_since_first_transaction
+  10. card_txn_count_total
+  11. card_txn_count_recent
+  12. card_amount_sum_recent
+  13. card_amount_mean_recent
+  14. P_emaildomain_txn_count
+  15. R_emaildomain_txn_count
+  16. product_txn_count
+  17. time_since_last_txn
+  18. card_avg_time_between_txn
+  19. card_amount_mean
+  20. card_amount_std
+  21. card_amount_median
+  22. amount_vs_mean
+  23. amount_vs_median
+  24. amount_zscore
+  25. is_amount_outlier
+  26. is_round_amount
+  27. is_even_amount
+  28. product_amount_mean
+  29. amount_vs_product_mean
+  30. P_emaildomain_fraud_rate
+  31. R_emaildomain_fraud_rate
+  32. card_type_fraud_rate
+  33. product_fraud_rate
+  34. device_fraud_rate
+  35. addr_fraud_rate
+  36. is_high_distance
+  37. is_high_distance2
+  38. card4_encoded
+  39. card6_encoded
+  40. ProductCD_encoded
+  41. M1_encoded
+  42. M2_encoded
+  43. M3_encoded
+  44. DeviceType_encoded
+  45. DeviceInfo_encoded
+  46. amount_bin_encoded
+  47. amount_x_hour
+  48. weekend_x_amount
