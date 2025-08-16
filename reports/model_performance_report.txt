@@ -1,0 +1,32 @@
+# FRAUD DETECTION MODEL PERFORMANCE REPORT
+============================================================
+Generated: 2025-08-16 03:42:36
+
+## MODEL COMPARISON
+----------------------------------------
+Model                Recall   Precision  F1-Score FPR   
+----------------------------------------
+isolation_forest     1.0000   0.0015     0.0030   1.0000
+random_forest        1.0000   1.0000     1.0000   0.0000
+logistic_regression  1.0000   1.0000     1.0000   0.0000
+ensemble             1.0000   1.0000     1.0000   0.0000
+
+## BEST MODEL DETAILS
+------------------------------
+Best Model: random_forest
+Recall (Fraud Detection): 1.0000
+Precision: 1.0000
+F1-Score: 1.0000
+False Positive Rate: 0.0000
+True Positives: 3
+False Positives: 0
+False Negatives: 0
+ROC-AUC: 1.0000
+PR-AUC: 1.0000
+
+## BUSINESS IMPACT ANALYSIS
+-----------------------------------
+Fraud Detection Rate: 100.0%
+False Positive Rate: 0.0%
+Estimated Annual Savings: $1000000
+Estimated False Positive Cost: $0
