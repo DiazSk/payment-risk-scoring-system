@@ -1,5 +1,5 @@
-# Multi-stage build for E-Commerce Fraud Detection System
-FROM python:3.9-slim as base
+# Multi-stage Dockerfile for E-Commerce Fraud Detection FastAPI
+FROM python:3.11-slim as base
 
 # Set working directory
 WORKDIR /app
@@ -15,7 +15,6 @@ ENV PYTHONDONTWRITEBYTECODE=1 \
 RUN apt-get update && apt-get install -y \
     build-essential \
     curl \
-    git \
     && rm -rf /var/lib/apt/lists/*
 
 # Create non-root user
@@ -39,51 +38,47 @@ FROM base as development
 COPY --chown=app:app . .
 
 # Create necessary directories
-RUN mkdir -p data/raw data/processed models logs config
+RUN mkdir -p data/raw data/processed models logs config reports
 
-# Copy configuration files
-COPY --chown=app:app config/ config/
-
-# Expose port for development
+# Expose port for FastAPI
 EXPOSE 8000
 
-# Development command
+# Development command - FastAPI with reload
 CMD ["python", "-m", "uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000", "--reload"]
 
 # Production stage
 FROM base as production
 
 # Copy only necessary files for production
-COPY --chown=app:app src/ src/
 COPY --chown=app:app app/ app/
+COPY --chown=app:app src/ src/
 COPY --chown=app:app config/ config/
 COPY --chown=app:app models/ models/
-COPY --chown=app:app dashboard/ dashboard/
+COPY --chown=app:app start_api.py .
 
 # Create necessary directories
-RUN mkdir -p data/raw data/processed logs
+RUN mkdir -p logs reports
 
-# Copy any pre-trained models (if they exist)
-# COPY --chown=app:app models/*.pkl models/ 2>/dev/null || :
-
-# Health check
-HEALTHCHECK --interval=30s --timeout=10s --start-period=5s --retries=3 \
+# Health check for FastAPI
+HEALTHCHECK --interval=30s --timeout=10s --start-period=30s --retries=3 \
     CMD curl -f http://localhost:8000/health || exit 1
 
 # Expose port
 EXPOSE 8000
 
-# Production command with gunicorn
-CMD ["gunicorn", "app.main:app", "-w", "4", "-k", "uvicorn.workers.UvicornWorker", "--bind", "0.0.0.0:8000", "--timeout", "120"]
+# Production command with gunicorn for better performance
+CMD ["python", "-m", "gunicorn", "app.main:app", "-w", "4", "-k", "uvicorn.workers.UvicornWorker", "--bind", "0.0.0.0:8000", "--timeout", "120"]
 
 # Testing stage
 FROM development as testing
 
 # Install additional testing dependencies
-RUN pip install --user pytest pytest-cov pytest-asyncio httpx
+RUN pip install --user pytest pytest-asyncio httpx
 
 # Copy test files
 COPY --chown=app:app tests/ tests/
+COPY --chown=app:app test_api.py .
+COPY --chown=app:app example_client.py .
 
-# Run tests
-CMD ["python", "-m", "pytest", "tests/", "-v", "--cov=src", "--cov=app"]
+# Run API tests
+CMD ["python", "test_api.py"]
