@@ -30,3 +30,6 @@ requests>=2.25.0  # For webhook alerts
 
 # Data Processing
 openpyxl>=3.0.0  # For Excel file support
+
+# Essential packages for FastAPI deployment
+python-multipart
