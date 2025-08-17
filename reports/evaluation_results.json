@@ -1,0 +1,73 @@
+{
+  "ensemble": {
+    "accuracy": 0.98,
+    "precision": 0.0,
+    "recall": 0.0,
+    "f1_score": 0.0,
+    "roc_auc": 0.009693877551020406,
+    "confusion_matrix": [
+      [
+        1960,
+        0
+      ],
+      [
+        40,
+        0
+      ]
+    ]
+  },
+  "isolation_forest": {
+    "accuracy": 0.98,
+    "precision": 0.0,
+    "recall": 0.0,
+    "f1_score": 0.0,
+    "roc_auc": 0.3846301020408163,
+    "confusion_matrix": [
+      [
+        1960,
+        0
+      ],
+      [
+        40,
+        0
+      ]
+    ]
+  },
+  "logistic_regression": {
+    "accuracy": 0.98,
+    "precision": 0.0,
+    "recall": 0.0,
+    "f1_score": 0.0,
+    "roc_auc": 0.5,
+    "confusion_matrix": [
+      [
+        1960,
+        0
+      ],
+      [
+        40,
+        0
+      ]
+    ]
+  },
+  "random_forest": {
+    "accuracy": 0.98,
+    "precision": 0.0,
+    "recall": 0.0,
+    "f1_score": 0.0,
+    "roc_auc": 0.4625,
+    "confusion_matrix": [
+      [
+        1960,
+        0
+      ],
+      [
+        40,
+        0
+      ]
+    ]
+  },
+  "xgboost": {
+    "error": "Feature shape mismatch, expected: 81, got 82"
+  }
+}
