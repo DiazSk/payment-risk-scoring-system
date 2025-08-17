@@ -1,14 +1,14 @@
 """
 Configuration settings for E-Commerce Fraud Detection System
-Centralized configuration management
+Centralized configuration management - Fixed version with proper typing
 """
 
 import os
 from pathlib import Path
-from typing import Dict, Any
+from typing import Dict, Any, Union, List
 
 # Base paths
-PROJECT_ROOT = Path(__file__).parent.parent
+PROJECT_ROOT = Path(__file__).parent
 DATA_DIR = PROJECT_ROOT / "data"
 RAW_DATA_DIR = DATA_DIR / "raw"
 PROCESSED_DATA_DIR = DATA_DIR / "processed"
@@ -20,10 +20,10 @@ for directory in [DATA_DIR, RAW_DATA_DIR, PROCESSED_DATA_DIR, MODELS_DIR, LOGS_D
     directory.mkdir(exist_ok=True, parents=True)
 
 class Config:
-    """Main configuration class"""
+    """Main configuration class with proper typing"""
     
     # Data Configuration
-    DATA_CONFIG = {
+    DATA_CONFIG: Dict[str, Union[str, float, int]] = {
         'raw_data_path': str(RAW_DATA_DIR),
         'processed_data_path': str(PROCESSED_DATA_DIR),
         'sample_data_file': 'sample_data.csv',
@@ -35,7 +35,7 @@ class Config:
     }
     
     # Model Configuration
-    MODEL_CONFIG = {
+    MODEL_CONFIG: Dict[str, Union[str, int]] = {
         'models_path': str(MODELS_DIR),
         'cv_folds': 5,
         'scoring': 'recall',  # Primary metric for fraud detection
@@ -44,13 +44,13 @@ class Config:
     }
     
     # XGBoost Configuration
-    XGBOOST_CONFIG = {
+    XGBOOST_CONFIG: Dict[str, Union[int, float, str]] = {
         'n_estimators': 100,
         'max_depth': 6,
         'learning_rate': 0.1,
         'subsample': 0.8,
         'colsample_bytree': 0.8,
-        'scale_pos_weight': 100,  # Handle class imbalance (adjust based on actual ratio)
+        'scale_pos_weight': 100,  # Handle class imbalance
         'reg_alpha': 0.1,
         'reg_lambda': 1.0,
         'random_state': 42,
@@ -59,7 +59,7 @@ class Config:
     }
     
     # Isolation Forest Configuration
-    ISOLATION_FOREST_CONFIG = {
+    ISOLATION_FOREST_CONFIG: Dict[str, Union[int, float]] = {
         'n_estimators': 100,
         'contamination': 0.002,  # Expected fraud rate
         'random_state': 42,
@@ -67,7 +67,7 @@ class Config:
     }
     
     # Feature Engineering Configuration
-    FEATURE_CONFIG = {
+    FEATURE_CONFIG: Dict[str, Union[List[int], List[float], int]] = {
         'velocity_windows': [3600, 86400, 604800],  # 1h, 1d, 7d in seconds
         'amount_bins': [0, 10, 50, 100, 500, 1000, float('inf')],
         'outlier_threshold': 3,  # Z-score threshold
@@ -75,7 +75,7 @@ class Config:
     }
     
     # API Configuration
-    API_CONFIG = {
+    API_CONFIG: Dict[str, Union[str, int]] = {
         'host': '0.0.0.0',
         'port': 8000,
         'workers': 1,
@@ -85,7 +85,7 @@ class Config:
     }
     
     # Database Configuration
-    DATABASE_CONFIG = {
+    DATABASE_CONFIG: Dict[str, Union[str, bool, int]] = {
         'url': os.getenv('DATABASE_URL', 'sqlite:///fraud_detection.db'),
         'echo': False,  # Set to True for SQL logging
         'pool_size': 5,
@@ -93,14 +93,14 @@ class Config:
     }
     
     # Redis Configuration (for caching)
-    REDIS_CONFIG = {
+    REDIS_CONFIG: Dict[str, Union[str, bool, int]] = {
         'url': os.getenv('REDIS_URL', 'redis://localhost:6379/0'),
         'decode_responses': True,
         'socket_timeout': 5
     }
     
     # Logging Configuration
-    LOGGING_CONFIG = {
+    LOGGING_CONFIG: Dict[str, Any] = {
         'version': 1,
         'disable_existing_loggers': False,
         'formatters': {
@@ -134,25 +134,25 @@ class Config:
     }
     
     # Monitoring Configuration
-    MONITORING_CONFIG = {
+    MONITORING_CONFIG: Dict[str, Union[float, Dict[str, str]]] = {
         'drift_threshold': 0.1,  # Threshold for drift detection
         'performance_threshold': 0.05,  # Alert if performance drops by 5%
         'model_retrain_threshold': 0.15,  # Retrain if drift > 15%
         'alert_endpoints': {
-            'slack': os.getenv('SLACK_WEBHOOK_URL'),
-            'email': os.getenv('ALERT_EMAIL')
+            'slack': os.getenv('SLACK_WEBHOOK_URL', ''),
+            'email': os.getenv('ALERT_EMAIL', '')
         }
     }
     
     # MLFlow Configuration
-    MLFLOW_CONFIG = {
+    MLFLOW_CONFIG: Dict[str, str] = {
         'tracking_uri': os.getenv('MLFLOW_TRACKING_URI', 'http://localhost:5000'),
         'experiment_name': 'fraud_detection',
         'model_registry_name': 'fraud_detection_model'
     }
     
     # Deployment Configuration
-    DEPLOYMENT_CONFIG = {
+    DEPLOYMENT_CONFIG: Dict[str, Union[str, bool]] = {
         'environment': os.getenv('ENVIRONMENT', 'development'),
         'debug': os.getenv('DEBUG', 'False').lower() == 'true',
         'docker_image': 'fraud-detector:latest',
@@ -201,18 +201,18 @@ class TestingConfig(Config):
         'early_stopping_rounds': 3
     })
 
-def get_config(environment: str = None) -> Config:
+def get_config(environment: str = 'development') -> Config:
     """Get configuration based on environment"""
     if environment is None:
         environment = os.getenv('ENVIRONMENT', 'development')
-    
     config_map = {
         'development': DevelopmentConfig,
         'production': ProductionConfig,
         'testing': TestingConfig
     }
     
-    return config_map.get(environment, DevelopmentConfig)
+    config_class = config_map.get(environment, DevelopmentConfig)
+    return config_class()
 
 # Convenience function for getting current config
 def get_current_config() -> Config:
