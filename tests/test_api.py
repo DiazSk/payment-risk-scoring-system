@@ -14,7 +14,7 @@ import sys
 class FraudAPITester:
     """Test the Fraud Detection API"""
     
-    def __init__(self, base_url="http://localhost:8000"):
+    def __init__(self, base_url="http://localhost:8080"):
         self.base_url = base_url
         self.session = requests.Session()
         
