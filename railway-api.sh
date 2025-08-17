@@ -1,4 +1,4 @@
 #!/bin/bash
 echo "🚀 FORCING API START"
-cd /app
+# Don't cd to /app, already there in Railway
 python app/main.py
