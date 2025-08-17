@@ -1,0 +1,24 @@
+[tool.pyright]
+    include = ["src", "app", "notebooks"]
+    exclude = ["**/__pycache__"]
+    reportMissingImports = true
+    reportMissingTypeStubs = false
+    pythonVersion = "3.8"
+
+    [tool.black]
+    line-length = 100
+    target-version = ['py38']
+    include = '\.pyi?$'
+    extend-exclude = [
+        "**/.eggs/**",
+        "**/.git/**",
+        "**/.mypy_cache/**",
+        "**/.pytest_cache/**",
+        "**/.venv/**",
+        "**/build/**",
+        "**/dist/**"
+    ]
+
+    [build-system]
+    requires = ["setuptools>=45", "wheel", "setuptools_scm[toml]>=6.2"]
+    
