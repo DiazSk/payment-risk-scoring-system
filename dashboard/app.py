@@ -68,7 +68,7 @@ st.markdown("""
 class FraudDashboard:
     def __init__(self):
         # Use environment variable for API URL, fallback to localhost for development
-        self.api_base_url = os.getenv("API_URL", "http://localhost:8000").rstrip('/')
+        self.api_base_url = os.getenv("API_URL", "http://localhost:8080").rstrip('/')
         self.models_metadata = None
         self.api_status = None
         
