@@ -33,3 +33,6 @@ openpyxl>=3.0.0  # For Excel file support
 
 # Essential packages for FastAPI deployment
 python-multipart
+
+# Dashboards
+streamlit>=1.20.0
