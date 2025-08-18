@@ -13,12 +13,32 @@ def main():
     
     print(f"🔍 Service Type: {service_type}")
     print(f"📍 Port: {port}")
+    print(f"📂 Current Directory: {os.getcwd()}")
+    print(f"📁 Directory Contents: {os.listdir('.')}")
+    
+    # Check if dashboard directory exists
+    if os.path.exists('dashboard'):
+        print(f"✅ Dashboard directory exists")
+        print(f"📁 Dashboard contents: {os.listdir('dashboard')}")
+    else:
+        print(f"❌ Dashboard directory NOT found")
     
     if service_type == 'dashboard':
         print("🎨 Starting Dashboard Service...")
         
-        # Install streamlit first
-        print("📦 Installing dependencies...")
+        # Check for the app.py file
+        if os.path.exists('dashboard/app.py'):
+            print("✅ Found dashboard/app.py")
+        else:
+            print("❌ dashboard/app.py NOT found")
+            # Try to find any .py files
+            for root, dirs, files in os.walk('.'):
+                for file in files:
+                    if file.endswith('.py'):
+                        print(f"   Found: {os.path.join(root, file)}")
+        
+        # Install streamlit if needed
+        print("📦 Ensuring dependencies...")
         subprocess.run([sys.executable, "-m", "pip", "install", "streamlit", "pandas", "plotly", "requests"])
         
         # Start streamlit using python module
