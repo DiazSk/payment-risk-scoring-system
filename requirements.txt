@@ -7,6 +7,9 @@ scikit-learn>=1.0.0
 scipy>=1.7.0
 joblib>=1.0.0
 
+# Imbalanced learning for better model training
+imbalanced-learn>=0.8.0
+
 # Visualization
 matplotlib>=3.4.0
 seaborn>=0.11.0
