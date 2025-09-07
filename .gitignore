@@ -126,3 +126,15 @@ mlruns/
 
 # Docker
 .dockerignore
+
+# Development and Agent Framework Files (BMAD)
+.bmad-core/
+agents/
+teams/
+expansion-packs/
+.cursor/
+help_output.md
+
+# Development artifacts that shouldn't be in production
+scripts/development/
+scripts/testing/
