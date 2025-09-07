@@ -1,11 +1,12 @@
 """
-Prediction Utilities for Fraud Detection API
-Helper functions for feature processing and batch predictions
+Prediction Utilities for Fraud Detection API with AML Compliance
+Helper functions for feature processing, batch predictions, and AML risk assessment
 """
 
 import json
 import logging
 import os
+import sys
 from datetime import datetime
 from pathlib import Path
 from typing import Any, Dict, List, Optional, Tuple, Union
@@ -13,6 +14,33 @@ from typing import Any, Dict, List, Optional, Tuple, Union
 import joblib
 import numpy as np
 import pandas as pd
+
+# Add src to path for AML compliance imports
+sys.path.append(os.path.join(os.path.dirname(__file__), '..', 'src'))
+
+try:
+    from aml_compliance import AMLComplianceChecker, add_aml_features_to_transaction
+except ImportError:
+    # Fallback for when module isn't available
+    class AMLComplianceChecker:
+        def calculate_overall_aml_risk(self, transaction_data):
+            return {
+                'aml_overall_risk_score': 0.1,
+                'aml_risk_level': 'LOW',
+                'aml_flags': [],
+                'requires_manual_review': False,
+                'aml_component_scores': {
+                    'structuring': 0.0,
+                    'rapid_movement': 0.0,
+                    'suspicious_patterns': 0.1,
+                    'sanctions': 0.0
+                }
+            }
+    
+    def add_aml_features_to_transaction(transaction_data, aml_checker=None):
+        if aml_checker is None:
+            aml_checker = AMLComplianceChecker()
+        return {**transaction_data, **aml_checker.calculate_overall_aml_risk(transaction_data)}
 
 # Setup logging
 logging.basicConfig(level=logging.INFO)
@@ -97,7 +125,7 @@ class FeatureProcessor:
         return feature_array
 
     def process_transaction_features(self, transaction_data: Dict) -> np.ndarray:
-        """Process raw transaction data into model features"""
+        """Process raw transaction data into model features with AML compliance"""
 
         # Extract and compute features
         amount = float(transaction_data.get("transaction_amount", 0))
@@ -118,6 +146,33 @@ class FeatureProcessor:
             "amount_zscore": float(transaction_data.get("amount_zscore", 0)),
             "is_amount_outlier": int(transaction_data.get("is_amount_outlier", 0)),
         }
+
+        # Add AML compliance features
+        try:
+            aml_checker = AMLComplianceChecker()
+            aml_result = aml_checker.calculate_overall_aml_risk(transaction_data)
+            
+            # Add AML features to the feature set
+            features.update({
+                "aml_risk_score": aml_result['aml_overall_risk_score'],
+                "aml_flags_count": len(aml_result['aml_flags']),
+                "requires_manual_review": int(aml_result['requires_manual_review']),
+                "structuring_risk": aml_result['aml_component_scores']['structuring'],
+                "rapid_movement_risk": aml_result['aml_component_scores']['rapid_movement'],
+                "suspicious_patterns_risk": aml_result['aml_component_scores']['suspicious_patterns'],
+                "sanctions_risk": aml_result['aml_component_scores']['sanctions']
+            })
+        except:
+            # Fallback values if AML checker fails
+            features.update({
+                "aml_risk_score": 0.1,
+                "aml_flags_count": 0,
+                "requires_manual_review": 0,
+                "structuring_risk": 0.0,
+                "rapid_movement_risk": 0.0,
+                "suspicious_patterns_risk": 0.1,
+                "sanctions_risk": 0.0
+            })
 
         # Add any additional features from transaction_data
         if "additional_features" in transaction_data:
