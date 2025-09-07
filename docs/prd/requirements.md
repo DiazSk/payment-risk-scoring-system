@@ -2,7 +2,7 @@
 
 ### Functional Requirements
 
-**FR1**: The system shall replace all artificial metrics (99.2% accuracy, 1.000 perfect scores) with realistic performance metrics targeting 87% accuracy with appropriate precision/recall trade-offs
+**FR1**: The system shall replace all artificial metrics (92.3% fraud detection rate, 1.000 perfect scores) with realistic performance metrics targeting 87% accuracy with appropriate precision/recall trade-offs
 
 **FR2**: The system shall implement real-time AML (Anti-Money Laundering) compliance checking including suspicious transaction pattern detection, watchlist screening, and regulatory threshold monitoring
 

@@ -358,4 +358,4 @@ System Metrics:
 
 ---
 
-*This architecture supports enterprise-scale fraud detection with 99.9% uptime and sub-100ms response times.*
+*This architecture supports enterprise-scale fraud detection with 99%+ uptime and sub-100ms response times.*

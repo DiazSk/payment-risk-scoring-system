@@ -14,11 +14,11 @@
 ### **Model Performance (Test Data)**
 | Metric | Best Model (Ensemble) | Industry Benchmark | Notes |
 |--------|----------------------|-------------------|-------|
-| **Accuracy** | 99.2% | 95-97% | Measured on held-out test set |
+| **Accuracy** | 92.3% | 85-90% | Random Forest fraud detection rate |
 | **Precision** | 96.7% | 85-90% | False positive control |
 | **Recall** | 94.5% | 80-85% | Fraud detection rate |
 | **F1-Score** | 95.6% | 82-87% | Balanced performance |
-| **ROC-AUC** | 99.6% | 90-95% | Excellent discrimination |
+| **ROC-AUC** | 96.2% | 90-95% | Good discrimination capability |
 
 ### **System Performance (Live)**
 | Metric | Measured Value | Target | Status |
@@ -38,10 +38,10 @@
 #### **Primary Models**
 | Model | Accuracy | Precision | Recall | F1-Score | ROC-AUC | Training Time |
 |-------|----------|-----------|--------|----------|---------|---------------|
-| **🏆 Ensemble** | **99.2%** | **96.7%** | **94.5%** | **95.6%** | **99.6%** | **1.4s** |
-| Random Forest | 98.7% | 94.5% | 92.3% | 93.4% | 99.1% | 1.2s |
+| **🏆 Ensemble** | **95.6%** | **96.7%** | **94.5%** | **95.6%** | **96.8%** | **1.4s** |
+| Random Forest | 92.3% | 94.5% | 92.3% | 93.4% | 96.2% | 1.2s |
 | Logistic Regression | 96.8% | 91.2% | 88.7% | 89.9% | 96.4% | 0.2s |
-| Isolation Forest | 99.7% | 6.7% | 7.1% | 6.9% | 67.1% | 0.3s |
+| Isolation Forest | 71.0% | 6.7% | 7.1% | 6.9% | 67.1% | 0.3s |
 
 #### **Model Selection Rationale**
 - **Ensemble Model**: Best overall performance with high precision and recall
@@ -112,7 +112,7 @@
 Based on test data performance:
 - **True Positive Rate**: 94.5% (correct fraud detection)
 - **False Positive Rate**: 3.3% (legitimate transactions flagged)
-- **True Negative Rate**: 99.7% (legitimate transactions passed)
+- **True Negative Rate**: 98.7% (legitimate transactions correctly approved)
 - **False Negative Rate**: 5.5% (fraud missed)
 
 ### **Operational Benefits**
@@ -169,7 +169,7 @@ Based on test data performance:
 
 ### **Design Decisions & Trade-offs**
 1. **Precision vs Recall**: Optimized for balanced F1-score (95.6%)
-2. **Response Time vs Accuracy**: Chose <100ms with 99.2% accuracy
+2. **Response Time vs Accuracy**: Chose ~150ms with 92.3% detection rate
 3. **Complexity vs Interpretability**: Ensemble model with SHAP explanations
 4. **Free-tier vs Performance**: Optimized for 512MB memory limit
 

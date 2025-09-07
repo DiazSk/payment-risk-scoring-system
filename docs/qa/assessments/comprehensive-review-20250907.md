@@ -75,7 +75,7 @@
 ### Story 1.6 - Defensible Metrics ✅
 **Quality Score: 98/100**
 - **Validation Framework**: Automated script validates all 8 claim categories
-- **Honest Metrics**: Real performance data (99.2% accuracy, 96.7% precision)
+- **Honest Metrics**: Real performance data (92.3% fraud detection rate, 96.7% precision)
 - **Interview Readiness**: Comprehensive preparation guide with live demos
 - **Documentation**: All claims backed by reproducible evidence
 - **Risk Assessment**: MINIMAL - Fully defensible, interview-ready

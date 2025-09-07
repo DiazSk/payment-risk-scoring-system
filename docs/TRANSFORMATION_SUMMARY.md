@@ -32,7 +32,7 @@
 ⬇️ VALIDATION & COMPLETION ⬇️
 
 🟩 AFTER (Professional State)
-├── Honest, verified metrics (99.2% accuracy)
+├── Honest, verified metrics (92.3% fraud detection rate)
 ├── Comprehensive risk detection system
 ├── Full AML regulatory compliance
 ├── Production-ready deployment options
@@ -48,7 +48,7 @@
 ### **Performance Metrics**
 | Aspect | BEFORE | AFTER | Improvement |
 |--------|--------|--------|-------------|
-| **Accuracy Claims** | 100% (artificial) | 99.2% (verified) | ✅ **Credible & Defensible** |
+| **Accuracy Claims** | 100% (artificial) | 92.3% (realistic) | ✅ **Credible & Defensible** |
 | **Model Types** | Single basic model | 4-model ensemble | ✅ **Robust & Comprehensive** |
 | **Features** | ~20 basic features | 82 engineered features | ✅ **300% Feature Expansion** |
 | **Testing** | Minimal/no tests | 38 comprehensive tests | ✅ **Professional Quality** |
@@ -178,7 +178,7 @@ payment-risk-scoring-system/
 ## 🏆 **Key Achievements Summary**
 
 ### **Technical Achievements**
-✅ **Performance Verification**: Replaced 100% artificial accuracy with 99.2% verified accuracy  
+✅ **Performance Verification**: Replaced 100% artificial accuracy with 92.3% detection rate accuracy  
 ✅ **Comprehensive Testing**: Built 38-test suite covering all functionality  
 ✅ **Production Deployment**: Live system on Railway with health monitoring  
 ✅ **AWS Architecture**: Complete infrastructure-as-code with Terraform  
@@ -206,7 +206,7 @@ payment-risk-scoring-system/
 *"A basic machine learning project with questionable metrics and limited functionality. Presented a significant reputation risk in technical interviews due to artificial performance claims and lack of real-world applicability."*
 
 ### **After Transformation**  
-*"A professional-grade fraud detection system showcasing advanced machine learning engineering, regulatory compliance expertise, and production deployment skills. Features honest, defensible metrics (99.2% verified accuracy), comprehensive AML compliance, real-time velocity monitoring, and complete AWS infrastructure automation. Ready for technical interviews with live demos and validation scripts."*
+*"A professional-grade fraud detection system showcasing advanced machine learning engineering, regulatory compliance expertise, and production deployment skills. Features honest, defensible metrics (92.3% detection rate accuracy), comprehensive AML compliance, real-time velocity monitoring, and complete AWS infrastructure automation. Ready for technical interviews with live demos and validation scripts."*
 
 ### **Career Positioning Value**
 This transformation demonstrates:

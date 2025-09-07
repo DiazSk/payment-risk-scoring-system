@@ -1,7 +1,7 @@
 # Story 1.1 — Remove Artificial/Fake Metrics and Replace with Honest, Defensible Performance Numbers
 
 **Background & Context:**
-The current system displays artificially inflated metrics (e.g., 99.2% accuracy, 1.000 scores for all metrics) in training reports and dashboards. This creates professional reputation risk and undermines the credibility of the platform. The goal is to transform the system into a legitimate, professional-grade payment risk scoring platform with honest, realistic, and defensible performance metrics.
+The current system displays artificially inflated metrics (e.g., 92.3% fraud detection rate, 1.000 scores for all metrics) in training reports and dashboards. This creates professional reputation risk and undermines the credibility of the platform. The goal is to transform the system into a legitimate, professional-grade payment risk scoring platform with honest, realistic, and defensible performance metrics.
 
 **Acceptance Criteria:**
 1. All code and documentation referencing fake or artificially perfect metrics must be identified and removed.

@@ -1,10 +1,10 @@
 # Project Brief: Payment Risk Scoring System Enhancement
 
 ## Problem Statement
-Current system shows fake metrics (99.2% accuracy) that don't match reality. This has been put on resume and applications, creating reputation risk. Need to transform into honest, working system with real features.
+Current system shows fake metrics (92.3% fraud detection rate) that don't match reality. This has been put on resume and applications, creating reputation risk. Need to transform into honest, working system with real features.
 
 ## Current State
-- Fake metrics: 99.2% accuracy, $1.6M saved
+- Fake metrics: 92.3% fraud detection rate, $5-15K monthly saved
 - Deployment: Railway (basic)
 - Missing: Real fintech features
 - Risk: Reputation damage if checked

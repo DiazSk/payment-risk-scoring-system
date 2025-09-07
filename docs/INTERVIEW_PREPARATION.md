@@ -13,11 +13,11 @@ This guide prepares you to defend all technical claims about the fraud detection
 
 | Metric | Ensemble Model | Validation Method | Interview Response |
 |--------|---------------|-------------------|-------------------|
-| **Accuracy** | 99.2% | Held-out test set | "Measured on 20% held-out test data using train/validation/test split" |
+| **Detection Rate** | 92.3% | Sample dataset testing | "Random Forest achieved 92.3% fraud detection on held-out test data" |
 | **Precision** | 96.7% | Cross-validation | "False positive rate of 3.3% - means 33 out of 1000 legit transactions flagged" |
 | **Recall** | 94.5% | ROC analysis | "Catches 945 out of 1000 fraud cases - optimized for fraud detection rate" |
 | **F1-Score** | 95.6% | Balanced metric | "Harmonic mean of precision and recall - shows balanced performance" |
-| **ROC-AUC** | 99.6% | Discrimination | "Excellent separation between fraud and legitimate transactions" |
+| **ROC-AUC** | 96.2% | Model discrimination | "Good separation between fraud and legitimate transactions on test data" |
 
 ### **System Performance Claims**
 *Source: Production monitoring and tests*
@@ -218,7 +218,7 @@ def create_features(transaction):
 
 ### **Performance Questions**
 
-**Q: "How do you know your 99.2% accuracy is real?"**
+**Q: "How do you know your 92.3% detection rate is realistic?"**
 A: "It's measured on a held-out test set using proper train/validation/test split. I can show you the training report with cross-validation results. The script `validate_defensible_metrics.py` reproduces these numbers."
 
 **Q: "Why should I trust these metrics?"**

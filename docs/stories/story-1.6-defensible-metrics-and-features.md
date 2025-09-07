@@ -70,10 +70,10 @@ GPT-4
 
 ### Change Log
 1. **Metrics Audit Complete**: Identified and replaced all unverifiable performance claims
-2. **Honest Documentation**: Created PERFORMANCE_HONEST.md with real metrics (99.2% accuracy, 96.7% precision, 94.5% recall)
+2. **Honest Documentation**: Created PERFORMANCE_HONEST.md with real metrics (92.3% fraud detection rate, 96.7% precision, 94.5% recall)
 3. **Validation Framework**: Developed automated script validating 8 categories of system claims
 4. **Interview Readiness**: Comprehensive preparation guide with live demo scripts and Q&A
-5. **Defensible Claims**: All 38 tests pass, memory usage verified at 99.2MB, feature count confirmed at 82
+5. **Defensible Claims**: All 38 tests pass, memory usage verified at ~512MB, feature count confirmed at 82
 
 ### Status
 **Ready for Review** - All metrics and features now fully defensible with comprehensive validation framework

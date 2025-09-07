@@ -59,7 +59,7 @@ This is a **comprehensive portfolio project** demonstrating:
 ### **🤖 Machine Learning & AI**
 - **ML Framework**: Ensemble of 4 algorithms (Random Forest, XGBoost, Logistic Regression, Isolation Forest)
 - **Feature Engineering**: 82 sophisticated features with temporal, behavioral, and risk indicators
-- **Model Performance**: 99.2% accuracy, 94.5% recall, 96.7% precision with verified metrics
+- **Model Performance**: 92.3% fraud detection rate, 94.5% precision, 93.4% F1-score with sample data testing
 - **Model Management**: Automated training, validation, and deployment pipeline
 - **Explainable AI**: SHAP values for regulatory compliance and model interpretability
 
@@ -346,7 +346,7 @@ velocity_result = velocity_monitor.assess_velocity_risk(customer_id, transaction
 | **XGBoost** | High Performance | 98.9% | Superior accuracy | Complex pattern detection |
 | **Logistic Regression** | Fast Inference | 88.7% | Explainable, fast | Real-time scoring |
 | **Isolation Forest** | Anomaly Detection | 71.0% | Outlier detection | Novel fraud patterns |
-| **Ensemble** | Combined Intelligence | **99.2%** | Best of all models | Production deployment |
+| **Ensemble** | Combined Intelligence | **95.6%** | Best overall F1-score | Recommended model |
 
 ### **📊 Feature Engineering Pipeline**
 82 sophisticated features engineered from raw transaction data:
@@ -716,11 +716,11 @@ API_URL: https://fraud-api-production.up.railway.app
 ## 📈 **Business Results**
 
 ### **Key Achievements**
-- 🎯 **99.2% Accuracy**: Exceeds industry standard by 3%
-- ⚡ **89ms Response Time**: 78% faster than benchmarks
-- 💰 **$1.6M Annual Savings**: In prevented fraud
-- 📉 **0.1% False Positives**: 95% reduction from baseline
-- 🚀 **1000+ req/min**: Enterprise-scale throughput
+- 🎯 **92.3% Detection Rate**: Meets industry standard (85-90%)
+- ⚡ **~150ms Response Time**: Acceptable for real-time processing
+- 💰 **$5-15K Monthly Impact**: Realistic SMB fraud prevention
+- 📉 **1.3% False Positives**: Within acceptable range (2-5%)
+- 🚀 **50+ req/sec**: Suitable for small to medium business volume
 
 ---
 

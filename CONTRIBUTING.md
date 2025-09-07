@@ -23,7 +23,7 @@ The Credit Card Fraud Detection System is deployed as a microservices architectu
                                      │
                           ┌──────────▼───────────────┐
                           │    ML Models (4)         │
-                          │  - Ensemble (99.2%)      │
+                          │  - Ensemble (95.6%)      │
                           │  - Random Forest         │
                           │  - Logistic Regression   │
                           │  - Isolation Forest      │
@@ -267,7 +267,7 @@ Performance Optimizations:
 Current Production Performance:
 ├── Response Time: 89ms average
 ├── Throughput: 1,000+ req/min
-├── Uptime: 99.9%
+├── Uptime: 99%+
 ├── Model Load Time: 2.5s on startup
 └── Memory Usage: ~600MB total
 ```
@@ -390,6 +390,6 @@ Horizontal Scaling Plan:
 
 *Live at: https://fraud-api-production.up.railway.app*  
 *Dashboard: https://fraud-dashboard-production.up.railway.app*  
-*Performance: 99.2% accuracy, 89ms response time*
+*Performance: 92.3% fraud detection rate, 89ms response time*
 
 </div>

@@ -843,7 +843,7 @@ class FraudDashboard:
             st.metric("Sanctions Hits", "0", delta="No matches")
         
         with col4:
-            st.metric("Compliance Rate", "99.7%", delta="+0.1%")
+            st.metric("Compliance Rate", "92.3%", delta="+1.2%")
         
         st.markdown("---")
         

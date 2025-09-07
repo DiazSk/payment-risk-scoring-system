@@ -13,7 +13,7 @@
 - ✅ **API Service**: [fraud-api-production.up.railway.app](https://fraud-api-production.up.railway.app)
 - ✅ **Dashboard Service**: [fraud-dashboard-production.up.railway.app](https://fraud-dashboard-production.up.railway.app)
 - ✅ **Status**: Fully operational with 4 models loaded
-- ✅ **Performance**: 89ms average response time, 99.2% accuracy
+- ✅ **Performance**: ~150ms average response time, 92.3% fraud detection rate
 
 ---
 
@@ -260,7 +260,7 @@ CMD ["streamlit", "run", "dashboard/app.py", "--server.port", "8080", "--server.
 {
   "response_time_avg": "89ms",
   "response_time_p95": "178ms",
-  "uptime": "99.9%",
+  "uptime": "99%+",
   "models_loaded": 4,
   "accuracy": "0.945",
   "false_positive_rate": "0.013"

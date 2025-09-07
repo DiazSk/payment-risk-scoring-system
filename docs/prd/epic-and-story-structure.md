@@ -21,7 +21,7 @@ so that **I can confidently defend the system's capabilities in interviews and p
 2. Retrain models to achieve target 87% accuracy with balanced precision/recall trade-offs
 3. Update all performance reports and dashboard displays to show honest metrics
 4. Ensure new metrics are mathematically sound and auditable
-5. Remove all references to 99.2% accuracy claims from documentation and code
+5. Remove all references to 92.3% fraud detection rate claims from documentation and code
 
 #### Integration Verification
 **IV1**: Existing FastAPI endpoints continue to function with new model artifacts without API contract changes  
