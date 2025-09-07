@@ -99,42 +99,53 @@ def test_data_pipeline():
 
 
 def test_feature_engineering(sample_df):
-    """Test 3: Feature engineering with fixture"""
+    """Test 3: Feature engineering with AML compliance"""
     logger.info("🔍 Testing feature engineering...")
 
     engineer = FeatureEngineer()
 
-    # Add temporal features
-    df_temp = engineer.add_temporal_features(sample_df)
-    assert "transaction_hour" in df_temp.columns
-    assert "transaction_day" in df_temp.columns
-    assert "transaction_weekend" in df_temp.columns
-    assert "is_business_hours" in df_temp.columns
-    logger.info(f"   - Temporal features: {4}")
+    # Test basic feature engineering with AML compliance
+    df_enhanced = engineer.engineer_features(sample_df)
+    
+    # Check basic engineered features
+    assert "amount_log" in df_enhanced.columns
+    assert "is_night" in df_enhanced.columns
+    logger.info(f"   - Basic features added: amount_log, is_night")
 
-    # Add amount features
-    df_amount = engineer.add_amount_features(df_temp)
-    amount_features = [col for col in df_amount.columns if "amount" in col.lower()]
-    logger.info(f"   - Amount features: {len(amount_features)}")
-
-    # Add velocity features
-    df_velocity = engineer.add_velocity_features(df_amount)
-    velocity_features = [
-        col
-        for col in df_velocity.columns
-        if any(x in col.lower() for x in ["velocity", "recent", "count"])
+    # Check AML compliance features were added
+    aml_features = [
+        "aml_risk_score", "aml_risk_level", "aml_flags_count", 
+        "requires_manual_review", "structuring_risk", "rapid_movement_risk",
+        "suspicious_patterns_risk", "sanctions_risk"
     ]
-    logger.info(f"   - Velocity features: {len(velocity_features)}")
+    
+    for feature in aml_features:
+        assert feature in df_enhanced.columns, f"AML feature {feature} not found"
+    
+    logger.info(f"   - AML features added: {len(aml_features)}")
+    
+    # Check AML risk scores are in valid range [0, 1]
+    assert df_enhanced["aml_risk_score"].min() >= 0
+    assert df_enhanced["aml_risk_score"].max() <= 1
+    logger.info(f"   - AML risk scores in valid range: [{df_enhanced['aml_risk_score'].min():.3f}, {df_enhanced['aml_risk_score'].max():.3f}]")
 
-    # Add risk features
+    # Add amount features (backward compatibility)
+    df_amount = engineer.add_amount_features(df_enhanced)
+    amount_features = [col for col in df_amount.columns if "amount" in col.lower()]
+    # Add velocity features (backward compatibility)
+    df_velocity = engineer.add_velocity_features(df_amount)
+    
+    # Add risk features (backward compatibility)
     df_final = engineer.add_risk_features(df_velocity)
+    
+    # Count AML-related risk features
     risk_features = [col for col in df_final.columns if "risk" in col.lower()]
-    logger.info(f"   - Risk features: {len(risk_features)}")
+    logger.info(f"   - Risk features (including AML): {len(risk_features)}")
 
     # Count total features (excluding target)
     feature_cols = [col for col in df_final.columns if col != "is_fraud"]
 
-    logger.info(f"✅ Feature engineering test passed! Created {len(feature_cols)} features")
+    logger.info(f"✅ Feature engineering test passed! Created {len(feature_cols)} features (including {len(aml_features)} AML features)")
     assert len(feature_cols) >= 20, f"Expected at least 20 features, got {len(feature_cols)}"
 
 
