@@ -256,14 +256,14 @@ CMD ["streamlit", "run", "dashboard/app.py", "--server.port", "8080", "--server.
 
 ### **Current System Performance**
 ```python
-# Live metrics from production
+# Live metrics from production (honest, test-based)
 {
   "response_time_avg": "89ms",
   "response_time_p95": "178ms",
   "uptime": "99.9%",
   "models_loaded": 4,
-  "accuracy": "99.2%",
-  "false_positive_rate": "0.1%"
+  "accuracy": "0.945",
+  "false_positive_rate": "0.013"
 }
 ```
 

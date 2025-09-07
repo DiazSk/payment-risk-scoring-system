@@ -7,6 +7,12 @@
 
 ---
 
+## 📋 **Quick Start Guides**
+
+- 🆓 **[Free-Tier Deployment](FREE_TIER_DEPLOYMENT.md)** - Railway, Render (recommended for portfolios)
+- ☁️ **[AWS Deployment](AWS_DEPLOYMENT_GUIDE.md)** - Production-grade cloud architecture  
+- 🐳 **Docker Deployment** - Container-based deployment (below)
+
 ## 🎯 **Deployment Options**
 
 ### **🌟 Recommended: Railway (Used in Production)**
