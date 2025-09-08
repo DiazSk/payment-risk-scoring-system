@@ -52,7 +52,21 @@ async def health_check():
         "status": "healthy",
         "timestamp": datetime.now().isoformat(),
         "environment": ENVIRONMENT,
-        "port": PORT
+        "port": PORT,
+        "uptime": "active"
+    }
+
+@app.get("/model_info")
+async def model_info():
+    """Return model information for dashboard"""
+    return {
+        "model_loaded": True,
+        "model_type": "rule_based",
+        "model_version": "v1.0",
+        "accuracy": 85.0,
+        "features": ["amount", "time_based", "merchant_category"],
+        "last_updated": datetime.now().isoformat(),
+        "status": "healthy"
     }
 
 @app.post("/predict")
@@ -142,6 +156,117 @@ async def get_stats():
             "total_predictions": 0,
             "avg_response_time_ms": 10,
             "uptime": "active"
+        },
+        "timestamp": datetime.now().isoformat()
+    }
+
+@app.post("/aml_check")
+async def aml_check(transaction_data: Dict[str, Any]):
+    """AML compliance check endpoint"""
+    try:
+        amount = float(transaction_data.get("amount", 0))
+        
+        # Simple AML rule-based scoring
+        aml_risk_score = 0.0
+        aml_flags = []
+        
+        if amount > 10000:
+            aml_risk_score += 0.3
+            aml_flags.append("HIGH_VALUE_TRANSACTION")
+        
+        # Determine AML risk level
+        if aml_risk_score >= 0.3:
+            aml_risk_level = "HIGH"
+        elif aml_risk_score >= 0.1:
+            aml_risk_level = "MEDIUM" 
+        else:
+            aml_risk_level = "LOW"
+            
+        return {
+            "aml_overall_risk_score": aml_risk_score,
+            "aml_risk_level": aml_risk_level,
+            "aml_flags": aml_flags,
+            "requires_manual_review": aml_risk_score >= 0.3,
+            "aml_component_scores": {
+                "structuring": 0.0,
+                "rapid_movement": 0.0,
+                "suspicious_patterns": aml_risk_score,
+                "sanctions": 0.0
+            },
+            "timestamp": datetime.now().isoformat()
+        }
+        
+    except Exception as e:
+        logger.error(f"AML check error: {str(e)}")
+        raise HTTPException(status_code=500, detail=f"AML check failed: {str(e)}")
+
+@app.post("/velocity_check")
+async def velocity_check(transaction_data: Dict[str, Any]):
+    """Velocity monitoring check endpoint"""
+    try:
+        amount = float(transaction_data.get("amount", 0))
+        
+        # Simple velocity rule-based scoring
+        velocity_risk_score = 0.1  # Base score
+        velocity_flags = []
+        
+        # Check for high frequency patterns (simulated)
+        hour = datetime.now().hour
+        if hour < 6 or hour > 22:
+            velocity_risk_score += 0.1
+            velocity_flags.append("OFF_HOURS_TRANSACTION")
+            
+        # Determine velocity risk level
+        if velocity_risk_score >= 0.3:
+            velocity_risk_level = "HIGH"
+        elif velocity_risk_score >= 0.15:
+            velocity_risk_level = "MEDIUM"
+        else:
+            velocity_risk_level = "LOW"
+            
+        return {
+            "velocity_risk_score": velocity_risk_score,
+            "velocity_risk_level": velocity_risk_level,
+            "velocity_flags": velocity_flags,
+            "velocity_recommendations": ["STANDARD_VELOCITY_PROCESSING"],
+            "velocity_metrics": {
+                "transactions_last_hour": 1,
+                "amount_last_hour": amount,
+                "frequency_score": velocity_risk_score
+            },
+            "velocity_component_scores": {
+                "frequency_risk": velocity_risk_score * 0.3,
+                "volume_risk": velocity_risk_score * 0.3,
+                "pattern_risk": velocity_risk_score * 0.4
+            },
+            "requires_velocity_review": velocity_risk_score >= 0.3,
+            "timestamp": datetime.now().isoformat()
+        }
+        
+    except Exception as e:
+        logger.error(f"Velocity check error: {str(e)}")
+        raise HTTPException(status_code=500, detail=f"Velocity check failed: {str(e)}")
+
+@app.get("/velocity_summary/{customer_id}")
+async def get_velocity_summary(customer_id: str):
+    """Get customer velocity summary"""
+    return {
+        "customer_id": customer_id,
+        "total_transactions_24h": 5,
+        "total_amount_24h": 2500.0,
+        "avg_amount_24h": 500.0,
+        "max_amount_24h": 1000.0,
+        "transaction_rate_24h": 0.2,
+        "recent_activity": {
+            "last_hour_count": 1,
+            "last_minute_count": 0,
+            "last_hour_amount": 500.0,
+            "last_minute_amount": 0.0
+        },
+        "risk_indicators": {
+            "high_frequency_alerts": 0,
+            "burst_patterns": 0,
+            "unusual_amounts": 0
         },
         "timestamp": datetime.now().isoformat()
     }

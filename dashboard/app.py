@@ -504,7 +504,7 @@ class FraudDashboard:
                 st.markdown("## 🎯 Fraud Analysis Results")
                 
                 # Main result
-                if result['is_fraud']:
+                if result.get('fraud_prediction', False):
                     st.error(f"🚨 **FRAUD DETECTED** (Risk: {result['risk_level']})")
                 else:
                     st.success(f"✅ **LEGITIMATE TRANSACTION** (Risk: {result['risk_level']})")
@@ -533,7 +533,7 @@ class FraudDashboard:
                     delta={'reference': 50},
                     gauge={
                         'axis': {'range': [None, 100]},
-                        'bar': {'color': "darkred" if result['is_fraud'] else "darkgreen"},
+                        'bar': {'color': "darkred" if result.get('fraud_prediction', False) else "darkgreen"},
                         'steps': [
                             {'range': [0, 20], 'color': "lightgreen"},
                             {'range': [20, 50], 'color': "yellow"},
@@ -1151,7 +1151,7 @@ class FraudDashboard:
             # Sample velocity metrics trend
             st.markdown("#### Velocity Metrics Trend (Last 24 Hours)")
             
-            hours = pd.date_range(end=datetime.now(), periods=24, freq='H')
+            hours = pd.date_range(end=datetime.now(), periods=24, freq='h')
             velocity_trends = pd.DataFrame({
                 'Hour': hours,
                 'High Frequency Alerts': np.random.poisson(2, 24),
