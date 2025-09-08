@@ -1,10 +1,10 @@
 # Railway-optimized requirements for Credit Card Fraud Detection System
-# Pinned versions for stable deployment
+# Python 3.11 compatible - pinned versions for stable deployment
 
 # Core ML and Data Science
-numpy==1.24.3
+numpy==1.24.4
 pandas==2.0.3
-scikit-learn==1.3.0
+scikit-learn==1.4.2
 xgboost==1.7.6
 joblib==1.3.2
 imbalanced-learn==0.11.0
