@@ -1,0 +1,29 @@
+{
+  "version": 2,
+  "name": "fraud-detection-dashboard",
+  "public": false,
+  "builds": [
+    {
+      "src": "dashboard/requirements.txt",
+      "use": "@vercel/python"
+    }
+  ],
+  "routes": [
+    {
+      "src": "/(.*)",
+      "dest": "/dashboard/app.py"
+    }
+  ],
+  "env": {
+    "API_URL": "https://fraud-api.onrender.com",
+    "STREAMLIT_SERVER_HEADLESS": "true",
+    "STREAMLIT_BROWSER_GATHER_USAGE_STATS": "false",
+    "STREAMLIT_SERVER_PORT": "8080"
+  },
+  "functions": {
+    "dashboard/app.py": {
+      "runtime": "python3.9",
+      "memory": 1024
+    }
+  }
+}

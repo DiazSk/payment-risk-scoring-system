@@ -7,78 +7,14 @@ import streamlit as st
 import pandas as pd
 import numpy as np
 import requests
-import json
 import plotly.express as px
 import plotly.graph_objects as go
 from plotly.subplots import make_subplots
-from datetime import datetime, timedelta
+from datetime import datetime
 import time
 import sys
 import os
 from pathlib import Path
-
-# Add parent directory to path for imports
-sys.path.append(str(Path(__file__).parent.parent))
-from dashboard.components import (
-    create_metric_card, create_model_performance_chart, 
-    create_fraud_trend_chart, create_feature_importance_chart,
-    create_confusion_matrix, load_model_metadata
-)
-
-# Add src to path for AML compliance imports
-sys.path.append(str(Path(__file__).parent.parent / "src"))
-
-try:
-    from aml_compliance import AMLComplianceChecker
-    from velocity_monitoring import VelocityMonitor
-except ImportError:
-    # Fallback for when modules aren't available
-    class AMLComplianceChecker:
-        def calculate_overall_aml_risk(self, transaction_data):
-            return {
-                'aml_overall_risk_score': 0.1,
-                'aml_risk_level': 'LOW',
-                'aml_flags': [],
-                'requires_manual_review': False,
-                'aml_component_scores': {
-                    'structuring': 0.0,
-                    'rapid_movement': 0.0,
-                    'suspicious_patterns': 0.1,
-                    'sanctions': 0.0
-                }
-            }
-    
-    class VelocityMonitor:
-        def assess_velocity_risk(self, customer_id, transaction_data):
-            return {
-                'velocity_risk_score': 0.1,
-                'velocity_risk_level': 'LOW',
-                'velocity_flags': [],
-                'velocity_recommendations': ['STANDARD_VELOCITY_PROCESSING'],
-                'velocity_metrics': {},
-                'velocity_component_scores': {
-                    'frequency_risk': 0.0,
-                    'volume_risk': 0.0,
-                    'pattern_risk': 0.1
-                },
-                'requires_velocity_review': False
-            }
-        
-        def get_customer_velocity_summary(self, customer_id):
-            return {
-                "customer_id": customer_id,
-                "total_transactions_24h": 0,
-                "total_amount_24h": 0,
-                "avg_amount_24h": 0,
-                "max_amount_24h": 0,
-                "transaction_rate_24h": 0,
-                "recent_activity": {
-                    "last_hour_count": 0,
-                    "last_minute_count": 0,
-                    "last_hour_amount": 0,
-                    "last_minute_amount": 0
-                }
-            }
 
 # Page configuration
 st.set_page_config(

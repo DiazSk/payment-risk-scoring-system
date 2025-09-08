@@ -582,7 +582,44 @@ Real-time monitoring and analytics:
 
 ---
 
-## 👨‍💻 **About This Portfolio Project**
+## � **Quick Deployment Guide**
+
+### **🔧 Deploy API to Render.com (Free)**
+```bash
+# 1. Push your code to GitHub
+git add . && git commit -m "Ready for deployment" && git push
+
+# 2. Deploy via render.yaml
+# Visit: https://render.com/deploy
+# Connect your GitHub repo and deploy automatically
+```
+
+### **📊 Deploy Dashboard to Streamlit Cloud (Free)**
+```bash
+# 1. Go to https://share.streamlit.io
+# 2. Connect GitHub and select your repo
+# 3. Set main file: dashboard/app.py
+# 4. Add environment variable: API_URL=https://fraud-api.onrender.com
+```
+
+### **🎯 One-Click Deploy**
+[![Deploy to Render](https://img.shields.io/badge/Deploy%20to-Render-brightgreen?style=for-the-badge&logo=render)](https://render.com/deploy)
+
+**Quick Start Commands:**
+```bash
+# Windows
+deploy.bat
+
+# Mac/Linux  
+./deploy.sh
+```
+
+### **📖 Detailed Instructions**
+See complete deployment guide: [docs/RENDER_VERCEL_DEPLOYMENT.md](docs/RENDER_VERCEL_DEPLOYMENT.md)
+
+---
+
+## �👨‍💻 **About This Portfolio Project**
 
 This payment risk scoring system demonstrates **professional software development capabilities** and **financial technology domain knowledge** through a complete, deployable system.
 
