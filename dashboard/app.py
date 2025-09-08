@@ -505,29 +505,29 @@ class FraudDashboard:
                 
                 # Main result
                 if result.get('fraud_prediction', False):
-                    st.error(f"🚨 **FRAUD DETECTED** (Risk: {result['risk_level']})")
+                    st.error(f"🚨 **FRAUD DETECTED** (Risk: {result.get('risk_level', 'UNKNOWN')})")
                 else:
-                    st.success(f"✅ **LEGITIMATE TRANSACTION** (Risk: {result['risk_level']})")
+                    st.success(f"✅ **LEGITIMATE TRANSACTION** (Risk: {result.get('risk_level', 'LOW')})")
                 
                 # Detailed metrics
                 col1, col2, col3, col4 = st.columns(4)
                 
                 with col1:
-                    st.metric("Fraud Probability", f"{result['fraud_probability']:.1%}")
+                    st.metric("Fraud Probability", f"{result.get('fraud_probability', 0):.1%}")
                 
                 with col2:
-                    st.metric("Risk Level", result['risk_level'])
+                    st.metric("Risk Level", result.get('risk_level', 'LOW'))
                 
                 with col3:
-                    st.metric("Confidence", f"{result['confidence']:.1%}")
+                    st.metric("Processing Time", f"{result.get('processing_time_ms', 10)}ms")
                 
                 with col4:
-                    st.metric("Model Used", result['model_used'])
+                    st.metric("Model Used", result.get('model_version', 'rule_based_v1'))
                 
                 # Probability visualization
                 fig = go.Figure(go.Indicator(
                     mode="gauge+number+delta",
-                    value=result['fraud_probability'] * 100,
+                    value=result.get('fraud_probability', 0) * 100,
                     domain={'x': [0, 1], 'y': [0, 1]},
                     title={'text': "Fraud Probability (%)"},
                     delta={'reference': 50},
