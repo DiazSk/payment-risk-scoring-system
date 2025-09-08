@@ -4,8 +4,8 @@ services:
     runtime: python
     region: oregon
     plan: free
-    buildCommand: "pip install --upgrade pip && pip install -r requirements-api.txt"
-    startCommand: "python app/main.py"
+    buildCommand: "pip install --upgrade pip && pip install -r requirements-basic.txt"
+    startCommand: "python app/main_simple.py"
     envVars:
       - key: PORT
         value: 10000
@@ -14,9 +14,7 @@ services:
       - key: ENVIRONMENT
         value: production
       - key: API_VERSION
-        value: v1
-      - key: PYTHON_VERSION
-        value: "3.11.7"
+        value: v2
     healthCheckPath: /health
     
   - type: web
