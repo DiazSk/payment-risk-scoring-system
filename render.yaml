@@ -22,8 +22,8 @@ services:
     runtime: python
     region: oregon
     plan: free
-    buildCommand: "pip install -r requirements-render.txt"
-    startCommand: "streamlit run dashboard/app.py --server.port $PORT --server.address 0.0.0.0 --server.headless true"
+    buildCommand: "pip install --upgrade pip && pip install -r requirements-dashboard.txt"
+    startCommand: "streamlit run dashboard/app_simple.py --server.port $PORT --server.address 0.0.0.0 --server.headless true"
     envVars:
       - key: PORT
         value: 10000
