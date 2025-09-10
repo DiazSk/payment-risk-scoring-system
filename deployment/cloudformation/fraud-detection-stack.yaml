@@ -209,6 +209,32 @@ Resources:
       DestinationCidrBlock: 0.0.0.0/0
       GatewayId: !Ref InternetGateway
 
+  # NAT Gateway for Private Subnets
+  NATGatewayEIP:
+    Type: AWS::EC2::EIP
+    DependsOn: AttachGateway
+    Properties:
+      Domain: vpc
+      Tags:
+        - Key: Name
+          Value: !Sub "${Environment}-nat-eip"
+
+  NATGateway:
+    Type: AWS::EC2::NatGateway
+    Properties:
+      AllocationId: !GetAtt NATGatewayEIP.AllocationId
+      SubnetId: !Ref PublicSubnet1
+      Tags:
+        - Key: Name
+          Value: !Sub "${Environment}-nat-gateway"
+
+  PrivateRoute:
+    Type: AWS::EC2::Route
+    Properties:
+      RouteTableId: !Ref PrivateRouteTable
+      DestinationCidrBlock: 0.0.0.0/0
+      NatGatewayId: !Ref NATGateway
+
   # Route Table Associations
   PublicSubnetRouteTableAssociation1:
     Type: AWS::EC2::SubnetRouteTableAssociation
@@ -382,7 +408,7 @@ Resources:
       BackupRetentionPeriod: !If [IsProduction, 30, 7]
       PreferredBackupWindow: "03:00-04:00"
       PreferredMaintenanceWindow: "sun:04:00-sun:05:00"
-      MultiAZ: !Ref EnableMultiAZCondition
+      MultiAZ: !If [EnableMultiAZCondition, true, false]
       PubliclyAccessible: false
       DeletionProtection: !If [IsProduction, true, false]
       Tags:
@@ -486,7 +512,10 @@ Resources:
       Protocol: HTTP
       DefaultActions:
         - Type: forward
-          TargetGroupArn: !Ref APITargetGroup
+          ForwardConfig:
+            TargetGroups:
+              - TargetGroupArn: !Ref APITargetGroup
+                Weight: 1
 
   # IAM Roles
   EC2Role:
@@ -572,7 +601,7 @@ Outputs:
     Description: Redis endpoint
     Value: !If 
       - EnableRedisCondition
-      - !GetAtt RedisCluster.PrimaryEndPoint.Address
+      - !GetAtt RedisCluster.RedisEndpoint.Address
       - "Redis not enabled"
     Export:
       Name: !Sub "${Environment}-Redis-Endpoint"
